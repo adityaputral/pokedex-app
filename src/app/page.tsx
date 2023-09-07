@@ -11,34 +11,18 @@ import typeToColorMapper from '@/src/utils/typeToColorMapper';
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState<Pokemons>([]);
+  const [totalPage, setTotalPage] = useState<number>(1);
 
-  const fetchDetailedDataOfThePokemon = async (
-    name: string
-  ): IPokemonDetail => {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    const data: IPokemonDetail = await response.json();
-
-    return data;
-  };
+  const limit = 20;
 
   async function populateData(query: string = '') {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?${query}`);
+    const response = await fetch(`/api/pokemon?${query}`);
     const data = await response.json();
 
     const pokemonListData = data.results;
 
-    for (let index = 0; index < pokemonListData.length; index++) {
-      const element = pokemonListData[index];
-
-      const detailedData = await fetchDetailedDataOfThePokemon(
-        pokemonListData[index].name
-      );
-      pokemonListData[index].image = detailedData?.sprites?.front_default || '';
-      pokemonListData[index].background =
-        typeToColorMapper(detailedData.types[0].type.name) || '';
-    }
-
     setPokemonList(pokemonListData);
+    setTotalPage(Math.floor(data.count / 20));
   }
 
   useEffect(() => {
@@ -46,7 +30,7 @@ export default function Home() {
   }, []);
 
   async function changeCurrentActivePage(pageNumber: number): Promise<void> {
-    populateData(`offset=${pageNumber}`);
+    populateData(`offset=${pageNumber > 1 ? limit * (pageNumber - 1) + 1 : 1}`);
   }
 
   return (
@@ -69,6 +53,7 @@ export default function Home() {
         <div className="flex items-center justify-center">
           <Pagination
             currentActivePageNumberChanged={changeCurrentActivePage}
+            count={totalPage}
           />
         </div>
       </section>

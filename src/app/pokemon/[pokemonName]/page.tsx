@@ -22,9 +22,7 @@ export default function PokemonDetail() {
 
   useEffect(() => {
     async function populateData() {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${params.pokemonName}`
-      );
+      const response = await fetch(`/api/pokemon/${params.pokemonName}`);
       const data = await response.json();
 
       setPokemonDetail(data);

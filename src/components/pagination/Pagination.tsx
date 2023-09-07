@@ -5,11 +5,13 @@ import { useState, useEffect, ChangeEvent } from 'react';
 interface PaginationProps {
   currentActivePageNumberChanged: (value: number) => void;
   page?: number | string | null | undefined;
+  count?: number;
 }
 
 const PaginationWrapper = ({
   currentActivePageNumberChanged,
-  page
+  page,
+  count
 }: PaginationProps) => {
   const [currentActivePageNumber, setCurrentActivePageNumber]: any = useState(
     page || 1
@@ -29,7 +31,7 @@ const PaginationWrapper = ({
   return (
     <>
       <Stack spacing={2}>
-        <Pagination count={10} onChange={handleChange} />
+        <Pagination count={count} onChange={handleChange} />
       </Stack>
     </>
   );
