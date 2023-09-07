@@ -22,7 +22,7 @@ import ElementIcon from '@/src/components/element-icon/ElementIcon';
 
 export default function PokemonDetail() {
   const params = useParams();
-  const [pokemonDetail, setPokemonDetail] = useState<IPokemonDetail>([]);
+  const [pokemonDetail, setPokemonDetail] = useState<IPokemonDetail | any>({});
 
   const { likedPokemons, likePokemon, unlikePokemon } = useLikedPokemons();
 
@@ -113,7 +113,7 @@ export default function PokemonDetail() {
                 ? pokemonDetail.stats.map(
                     (
                       stat: {
-                        base_stat: number;
+                        base_stat: number | string;
                         stat: {
                           name: string;
                         };
@@ -129,7 +129,7 @@ export default function PokemonDetail() {
                         >
                           <CircularProgress
                             variant="determinate"
-                            value={stat.base_stat}
+                            value={+stat.base_stat}
                           />
                           <Box
                             sx={{
