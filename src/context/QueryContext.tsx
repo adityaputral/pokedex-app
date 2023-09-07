@@ -3,7 +3,13 @@ import {
   QueryClientProvider,
   useQuery
 } from '@tanstack/react-query';
-import { createContext, useContext, useState, forwardRef } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  forwardRef,
+  ReactNode
+} from 'react';
 
 const QueryContext = createContext<{
   isLoading: boolean;
@@ -12,7 +18,7 @@ const QueryContext = createContext<{
 } | null>(null);
 
 const queryClient = new QueryClient();
-export function QueryProvider({ children }) {
+export function QueryProvider({ children }: { children: ReactNode }) {
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 

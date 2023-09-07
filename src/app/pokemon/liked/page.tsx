@@ -7,12 +7,16 @@ import Card from '../../../components/card/Card';
 import { useLikedPokemons } from './../../../context/LikedPokemonContext';
 
 export default function LikedPokemonPage() {
-  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonList, setPokemonList] = useState<
+    { name: string; image: string }[]
+  >([]);
   const { likedPokemons } = useLikedPokemons();
 
   useEffect(() => {
     async function populateData() {
-      let mergedPokemonList = [...pokemonList];
+      let mergedPokemonList: { name: string; image: string }[] = [
+        ...pokemonList
+      ];
       for (let index = 0; index < likedPokemons.length; index++) {
         const element = likedPokemons[index];
         const response = await fetch(`/api/pokemon/${element}`);
