@@ -1,4 +1,4 @@
-type ElementType =
+export type ElementType =
   | 'grass'
   | 'poison'
   | 'fire'

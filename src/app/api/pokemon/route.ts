@@ -1,8 +1,14 @@
-import { Pokemons, IPokemon, IPokemonDetail } from '@/types/PokemonData';
-import typeToColorMapper from '@/src/utils/typeToColorMapper';
+import {
+  Pokemons,
+  IPokemon,
+  IPokemonDetail
+} from './../../../types/PokemonData';
+import typeToColorMapper, { ElementType } from '@/src/utils/typeToColorMapper';
 import { NextResponse, NextRequest } from 'next/server';
 
-const fetchDetailedDataOfThePokemon = async (name: string): IPokemonDetail => {
+const fetchDetailedDataOfThePokemon = async (
+  name: string
+): Promise<IPokemonDetail> => {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
   const data: IPokemonDetail = await response.json();
 
@@ -25,7 +31,7 @@ export async function GET(request: Request) {
     );
     pokemonListData[index].image = detailedData?.sprites?.front_default || '';
     pokemonListData[index].background =
-      typeToColorMapper(detailedData.types[0].type.name) || '';
+      typeToColorMapper(detailedData.types[0].type.name as ElementType) || '';
   }
 
   return NextResponse.json({ results: pokemonListData, count: data.count });
