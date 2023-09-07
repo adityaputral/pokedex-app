@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Pokemons, IPokemon, IPokemonDetail } from '@/types/PokemonData';
+import { Pokemons, IPokemon, IPokemonDetail } from './../types/PokemonData';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import Card from '../components/card/Card';

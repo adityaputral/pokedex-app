@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-import { IPokemonDetail } from '@/types/PokemonData';
+import { IPokemonDetail } from './../../../types/PokemonData';
 import Link from 'next/link';
 import { useLikedPokemons } from './../../../context/LikedPokemonContext';
 
