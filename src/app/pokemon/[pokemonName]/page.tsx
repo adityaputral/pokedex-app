@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { IPokemonDetail } from '@/types/PokemonData';
+import Link from 'next/link';
 
 export default function PokemonDetail() {
   const params = useParams();
@@ -23,6 +24,7 @@ export default function PokemonDetail() {
 
   return (
     <>
+      <Link href={'/'}>Back</Link>
       <h1>Pokemon Detail Page</h1>
       <section>
         <strong>Name</strong> : <p>{pokemonDetail.name || '-'}</p>

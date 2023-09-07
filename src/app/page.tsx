@@ -22,6 +22,8 @@ export default function Home() {
     <>
       <h1>Pokemon Listing</h1>
 
+      <Link href={'/pokemon/liked'}>See My Liked Pokemon</Link>
+
       <section>
         {pokemonList && pokemonList.length > 0
           ? pokemonList.map((pokemon: IPokemon, i: number) => (
