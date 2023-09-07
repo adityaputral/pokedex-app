@@ -9,10 +9,10 @@ import { LikedPokemonProvider } from './../context/LikedPokemonContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Pokedex',
-  description: ''
-};
+// export const metadata: Metadata = {
+//   title: 'Pokedex',
+//   description: ''
+// };
 
 export default function RootLayout({
   children
