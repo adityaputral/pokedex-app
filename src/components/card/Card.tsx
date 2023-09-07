@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Image from 'next/image';
 
 import { ICardData, ICardProps } from './Card';
 
@@ -21,7 +22,7 @@ const Cards = ({ items, deleteFn }: ICardProps) => {
             return (
               <Grid item xs={4} sm={3} key={i}>
                 <div
-                  className="rounded bg-repeat bg-center bg-cover shadow cursor-pointer relative"
+                  className={`bg-${cardItem.background} rounded bg-repeat bg-center bg-cover shadow cursor-pointer relative border-solid border-2`}
                   onMouseEnter={() => setIsOnHover(true)}
                   onMouseLeave={() => setIsOnHover(false)}
                 >
@@ -31,9 +32,17 @@ const Cards = ({ items, deleteFn }: ICardProps) => {
                   >
                     <div>
                       {isOnHover}
-                      <h2>{cardItem.name || '-'}</h2>
+                      <h2 className="uppercase">{cardItem.name || '-'}</h2>
                     </div>
                   </div>
+
+                  <Image
+                    className="absolute right-0 bottom-0"
+                    src={cardItem.image || ''}
+                    width={100}
+                    height={100}
+                    alt="Pokemon image"
+                  />
                 </div>
               </Grid>
             );
