@@ -1,8 +1,11 @@
+'use client';
+
 import './globals.css';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
+import { LikedPokemonProvider } from './../context/LikedPokemonContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,7 +33,7 @@ export default function RootLayout({
           </Link>
         </div>
 
-        {children}
+        <LikedPokemonProvider>{children}</LikedPokemonProvider>
       </body>
     </html>
   );

@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import { Pokemons, IPokemon, IPokemonDetail } from '@/types/PokemonData';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
 import Card from '../components/card/Card';
 import Pagination from '../components/pagination/Pagination';
-import typeToColorMapper from '@/src/utils/typeToColorMapper';
+import { LikedPokemonProvider } from './../context/LikedPokemonContext';
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState<Pokemons>([]);

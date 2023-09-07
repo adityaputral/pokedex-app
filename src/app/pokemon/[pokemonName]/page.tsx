@@ -10,15 +10,21 @@ import Image from 'next/image';
 import CircularProgress, {
   CircularProgressProps
 } from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { IPokemonDetail } from '@/types/PokemonData';
 import Link from 'next/link';
+import { useLikedPokemons } from './../../../context/LikedPokemonContext';
 
 import ElementIcon from '@/src/components/element-icon/ElementIcon';
 
 export default function PokemonDetail() {
   const params = useParams();
   const [pokemonDetail, setPokemonDetail] = useState<IPokemonDetail>([]);
+
+  const { likedPokemons, likePokemon, unlikePokemon } = useLikedPokemons();
 
   useEffect(() => {
     async function populateData() {
@@ -31,12 +37,31 @@ export default function PokemonDetail() {
     populateData();
   }, []);
 
+  const toggleLikedPokemon = (pokemonName: string) => {
+    likedPokemons.includes(pokemonName)
+      ? unlikePokemon(pokemonName)
+      : likePokemon(pokemonName);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-7">
-        <h1 className="uppercase font-bold text-3xl">
-          {pokemonDetail.name || '-'}
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="uppercase font-bold text-3xl">
+            {pokemonDetail.name || '-'}
+          </h1>
+
+          <IconButton
+            aria-label="like and unlike"
+            onClick={() => toggleLikedPokemon(pokemonDetail.name)}
+          >
+            {likedPokemons.includes(pokemonDetail.name) ? (
+              <FavoriteIcon className="text-red" />
+            ) : (
+              <FavoriteBorderIcon></FavoriteBorderIcon>
+            )}
+          </IconButton>
+        </div>
         <Button>
           <Link href={'/'}>Back</Link>
         </Button>
@@ -60,7 +85,7 @@ export default function PokemonDetail() {
             :<p>{pokemonDetail.height || '-'} cm</p>
             <strong>Weight</strong> : <p>{pokemonDetail.weight || '-'} kg</p>
             <strong>Types</strong> :{' '}
-            <p>
+            <p className="capitalize color-white">
               {pokemonDetail.types && pokemonDetail.types.length > 0
                 ? pokemonDetail.types.map(
                     (
@@ -72,68 +97,67 @@ export default function PokemonDetail() {
                       i: number
                     ) => (
                       <>
-                        <p className="capitalize color-white">
-                          <ElementIcon type={type.type?.name}></ElementIcon>
-                          {type.type.name}
-                        </p>
+                        <ElementIcon
+                          type={type.type?.name}
+                          key={i}
+                        ></ElementIcon>
+                        {type.type.name}
                       </>
                     )
                   )
                 : '-'}
             </p>
             <strong>Stats</strong> :{' '}
-            <p>
-              <Grid container spacing={3} sx={{ marginBottom: '20px' }}>
-                {pokemonDetail.stats && pokemonDetail.stats.length > 0
-                  ? pokemonDetail.stats.map(
-                      (
+            <Grid container spacing={3} sx={{ marginBottom: '20px' }}>
+              {pokemonDetail.stats && pokemonDetail.stats.length > 0
+                ? pokemonDetail.stats.map(
+                    (
+                      stat: {
+                        base_stat: number;
                         stat: {
-                          base_stat: number;
-                          stat: {
-                            name: string;
-                          };
-                        },
-                        i: number
-                      ) => (
-                        <Grid item xs={4} sm={3} key={i}>
+                          name: string;
+                        };
+                      },
+                      i: number
+                    ) => (
+                      <Grid item xs={4} sm={3} key={i}>
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            display: 'inline-flex'
+                          }}
+                        >
+                          <CircularProgress
+                            variant="determinate"
+                            value={stat.base_stat}
+                          />
                           <Box
                             sx={{
-                              position: 'relative',
-                              display: 'inline-flex'
+                              top: 0,
+                              left: 0,
+                              bottom: 0,
+                              right: 0,
+                              position: 'absolute',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
                             }}
                           >
-                            <CircularProgress
-                              variant="determinate"
-                              value={stat.base_stat}
-                            />
-                            <Box
-                              sx={{
-                                top: 0,
-                                left: 0,
-                                bottom: 0,
-                                right: 0,
-                                position: 'absolute',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}
+                            <Typography
+                              variant="caption"
+                              component="div"
+                              className="capitalize"
                             >
-                              <Typography
-                                variant="caption"
-                                component="div"
-                                className="capitalize"
-                              >
-                                {stat.base_stat}
-                              </Typography>
-                            </Box>
+                              {stat.base_stat}
+                            </Typography>
                           </Box>
-                          <p className="uppercase">{stat.stat.name}</p>
-                        </Grid>
-                      )
+                        </Box>
+                        <p className="uppercase">{stat.stat.name}</p>
+                      </Grid>
                     )
-                  : '-'}
-              </Grid>
-            </p>
+                  )
+                : '-'}
+            </Grid>
           </div>
         </div>
       </section>
