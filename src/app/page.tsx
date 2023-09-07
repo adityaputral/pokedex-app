@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Pokemons, IPokemon } from '@/types/PokemonData';
 import Link from 'next/link';
+import Card from '../components/card/Card';
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState<Pokemons>([]);
@@ -25,16 +26,11 @@ export default function Home() {
       <Link href={'/pokemon/liked'}>See My Liked Pokemon</Link>
 
       <section>
-        {pokemonList && pokemonList.length > 0
-          ? pokemonList.map((pokemon: IPokemon, i: number) => (
-              <>
-                <Link href={`/pokemon/${pokemon.name}`} key={i}>
-                  {pokemon.name}
-                </Link>
-                <br />
-              </>
-            ))
-          : 'No pokemon available'}
+        {pokemonList && pokemonList.length > 0 ? (
+          <Card items={pokemonList} />
+        ) : (
+          'No pokemon available'
+        )}
       </section>
     </>
   );
