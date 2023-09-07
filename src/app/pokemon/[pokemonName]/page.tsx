@@ -2,8 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Image from 'next/image';
+import CircularProgress, {
+  CircularProgressProps
+} from '@mui/material/CircularProgress';
+
 import { IPokemonDetail } from '@/types/PokemonData';
 import Link from 'next/link';
+
+import ElementIcon from '@/src/components/element-icon/ElementIcon';
 
 export default function PokemonDetail() {
   const params = useParams();
@@ -24,52 +35,109 @@ export default function PokemonDetail() {
 
   return (
     <>
-      <Link href={'/'}>Back</Link>
-      <h1>Pokemon Detail Page</h1>
+      <div className="flex justify-between items-center mb-7">
+        <h1 className="uppercase font-bold text-3xl">
+          {pokemonDetail.name || '-'}
+        </h1>
+        <Button>
+          <Link href={'/'}>Back</Link>
+        </Button>
+      </div>
+
       <section>
-        <strong>Name</strong> : <p>{pokemonDetail.name || '-'}</p>
-        <strong>Height</strong> : <p>{pokemonDetail.height || '-'}</p>
-        <strong>Weight</strong> : <p>{pokemonDetail.weight || '-'}</p>
-        <strong>Types</strong> :{' '}
-        <p>
-          {pokemonDetail.types && pokemonDetail.types.length > 0
-            ? pokemonDetail.types.map(
-                (
-                  type: {
-                    type: {
-                      name: string;
-                    };
-                  },
-                  i: number
-                ) => (
-                  <>
-                    <p>{type.type.name}</p>
-                  </>
-                )
-              )
-            : '-'}
-        </p>
-        <strong>Stats</strong> :{' '}
-        <p>
-          {pokemonDetail.stats && pokemonDetail.stats.length > 0
-            ? pokemonDetail.stats.map(
-                (
-                  stat: {
-                    base_stat: number;
-                    stat: {
-                      name: string;
-                    };
-                  },
-                  i: number
-                ) => (
-                  <>
-                    <p>{stat.base_stat}</p>
-                    <p>{stat.stat.name}</p>
-                  </>
-                )
-              )
-            : '-'}
-        </p>
+        <div className="flex justify-between items-center mb-7">
+          {pokemonDetail.sprites?.front_default && (
+            <Image
+              src={pokemonDetail.sprites?.front_default || ''}
+              width={300}
+              height={300}
+              alt="Picture of the author"
+            />
+          )}
+
+          <div className="">
+            <label>
+              <strong>Height</strong>
+            </label>
+            :<p>{pokemonDetail.height || '-'} cm</p>
+            <strong>Weight</strong> : <p>{pokemonDetail.weight || '-'} kg</p>
+            <strong>Types</strong> :{' '}
+            <p>
+              {pokemonDetail.types && pokemonDetail.types.length > 0
+                ? pokemonDetail.types.map(
+                    (
+                      type: {
+                        type: {
+                          name: string;
+                        };
+                      },
+                      i: number
+                    ) => (
+                      <>
+                        <p className="capitalize color-white">
+                          <ElementIcon type={type.type?.name}></ElementIcon>
+                          {type.type.name}
+                        </p>
+                      </>
+                    )
+                  )
+                : '-'}
+            </p>
+            <strong>Stats</strong> :{' '}
+            <p>
+              <Grid container spacing={3} sx={{ marginBottom: '20px' }}>
+                {pokemonDetail.stats && pokemonDetail.stats.length > 0
+                  ? pokemonDetail.stats.map(
+                      (
+                        stat: {
+                          base_stat: number;
+                          stat: {
+                            name: string;
+                          };
+                        },
+                        i: number
+                      ) => (
+                        <Grid item xs={4} sm={3} key={i}>
+                          <Box
+                            sx={{
+                              position: 'relative',
+                              display: 'inline-flex'
+                            }}
+                          >
+                            <CircularProgress
+                              variant="determinate"
+                              value={stat.base_stat}
+                            />
+                            <Box
+                              sx={{
+                                top: 0,
+                                left: 0,
+                                bottom: 0,
+                                right: 0,
+                                position: 'absolute',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              <Typography
+                                variant="caption"
+                                component="div"
+                                className="capitalize"
+                              >
+                                {stat.base_stat}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <p className="uppercase">{stat.stat.name}</p>
+                        </Grid>
+                      )
+                    )
+                  : '-'}
+              </Grid>
+            </p>
+          </div>
+        </div>
       </section>
     </>
   );

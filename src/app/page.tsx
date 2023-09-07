@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-10">
+      <div className="mb-10">
         <Button>
           <Link href={'/pokemon/liked'}>See My Liked Pokemon</Link>
         </Button>
