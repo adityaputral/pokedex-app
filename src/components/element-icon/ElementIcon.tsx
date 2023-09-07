@@ -6,7 +6,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import BugReportIcon from '@mui/icons-material/BugReport';
-
+// @ts-ignore
 import { ElementType } from './ElementIcon';
 
 export default function ElementIcon({ type }: { type: ElementType }) {

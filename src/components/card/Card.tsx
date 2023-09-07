@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
-
+// @ts-ignore
 import { ICardData, ICardProps } from './Card';
 
 const Cards = ({ items, deleteFn }: ICardProps) => {
