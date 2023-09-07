@@ -19,25 +19,23 @@ const Cards = ({ items, deleteFn }: ICardProps) => {
           items.length > 0 &&
           items.map((cardItem: ICardData, i: number) => {
             return (
-              <>
-                <Grid item xs={4} sm={3} key={i}>
+              <Grid item xs={4} sm={3} key={i}>
+                <div
+                  className="rounded bg-repeat bg-center bg-cover shadow cursor-pointer relative"
+                  onMouseEnter={() => setIsOnHover(true)}
+                  onMouseLeave={() => setIsOnHover(false)}
+                >
                   <div
-                    className="rounded bg-repeat bg-center bg-cover shadow cursor-pointer relative"
-                    onMouseEnter={() => setIsOnHover(true)}
-                    onMouseLeave={() => setIsOnHover(false)}
+                    className="p-5 flex flex-col relative min-h-[200px]"
+                    onClick={() => goToDetail(cardItem)}
                   >
-                    <div
-                      className="p-5 flex flex-col relative min-h-[200px]"
-                      onClick={() => goToDetail(cardItem)}
-                    >
-                      <div>
-                        {isOnHover}
-                        <h2>{cardItem.name || '-'}</h2>
-                      </div>
+                    <div>
+                      {isOnHover}
+                      <h2>{cardItem.name || '-'}</h2>
                     </div>
                   </div>
-                </Grid>
-              </>
+                </div>
+              </Grid>
             );
           })}
       </Grid>

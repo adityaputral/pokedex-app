@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Pokemons, IPokemon } from '@/types/PokemonData';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+import Image from 'next/image';
 import Card from '../components/card/Card';
 
 export default function Home() {
@@ -21,9 +23,11 @@ export default function Home() {
 
   return (
     <>
-      <h1>Pokemon Listing</h1>
-
-      <Link href={'/pokemon/liked'}>See My Liked Pokemon</Link>
+      <div className="flex justify-between items-center mb-10">
+        <Button>
+          <Link href={'/pokemon/liked'}>See My Liked Pokemon</Link>
+        </Button>
+      </div>
 
       <section>
         {pokemonList && pokemonList.length > 0 ? (

@@ -1,5 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -17,6 +19,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} container mx-auto p-4`}>
+        <div className="flex justify-between items-center mb-10">
+          <Link href={'/'}>
+            <Image
+              src="/logo.png"
+              width={200}
+              height={200}
+              alt="Picture of the author"
+            />
+          </Link>
+        </div>
+
         {children}
       </body>
     </html>
