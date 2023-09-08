@@ -34,7 +34,11 @@ export default function Home() {
   }, []);
 
   async function changeCurrentActivePage(pageNumber: number): Promise<void> {
-    populateData(`offset=${pageNumber > 1 ? limit * (pageNumber - 1) + 1 : 1}`);
+    populateData(
+      pageNumber > 1
+        ? `offset=${pageNumber > 1 ? limit * (pageNumber - 1) + 1 : 1}`
+        : ''
+    );
   }
 
   return (
