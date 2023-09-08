@@ -96,13 +96,10 @@ export default function PokemonDetail() {
                       },
                       i: number
                     ) => (
-                      <>
-                        <ElementIcon
-                          type={type.type?.name}
-                          key={i}
-                        ></ElementIcon>
+                      <span key={i}>
+                        <ElementIcon type={type.type?.name}></ElementIcon>
                         {type.type.name}
-                      </>
+                      </span>
                     )
                   )
                 : '-'}
