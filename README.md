@@ -1,3 +1,3 @@
 # Pokedex
 
-Live Site : https://pokedex-f3znogouc-adityaputral.vercel.app/
+Live Site : https://pokedex-app-ruby.vercel.app/
