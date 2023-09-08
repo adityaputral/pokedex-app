@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import { LikedPokemonProvider } from './../context/LikedPokemonContext';
+import { LoadingProvider } from './../context/LoadingContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,7 +34,9 @@ export default function RootLayout({
           </Link>
         </div>
 
-        <LikedPokemonProvider>{children}</LikedPokemonProvider>
+        <LoadingProvider>
+          <LikedPokemonProvider>{children}</LikedPokemonProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

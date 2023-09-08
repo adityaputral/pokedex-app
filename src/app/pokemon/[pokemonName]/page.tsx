@@ -17,6 +17,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { IPokemonDetail } from './../../../types/PokemonData';
 import Link from 'next/link';
 import { useLikedPokemons } from './../../../context/LikedPokemonContext';
+import { useLoading } from './../../../context/LoadingContext';
 
 import ElementIcon from '@/src/components/element-icon/ElementIcon';
 
@@ -25,13 +26,16 @@ export default function PokemonDetail() {
   const [pokemonDetail, setPokemonDetail] = useState<IPokemonDetail | any>({});
 
   const { likedPokemons, likePokemon, unlikePokemon } = useLikedPokemons();
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     async function populateData() {
+      setLoading(true);
       const response = await fetch(`/api/pokemon/${params.pokemonName}`);
       const data = await response.json();
 
       setPokemonDetail(data);
+      setLoading(false);
     }
 
     populateData();

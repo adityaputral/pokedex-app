@@ -7,14 +7,18 @@ import Button from '@mui/material/Button';
 import Card from '../components/card/Card';
 import Pagination from '../components/pagination/Pagination';
 import { LikedPokemonProvider } from './../context/LikedPokemonContext';
+import { useLoading } from './../context/LoadingContext';
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState<Pokemons>([]);
   const [totalPage, setTotalPage] = useState<number>(1);
 
+  const { setLoading } = useLoading();
+
   const limit = 20;
 
   async function populateData(query: string = '') {
+    setLoading(true);
     const response = await fetch(`/api/pokemon?${query}`);
     const data = await response.json();
 
@@ -22,6 +26,7 @@ export default function Home() {
 
     setPokemonList(pokemonListData);
     setTotalPage(Math.floor(data.count / 20));
+    setLoading(false);
   }
 
   useEffect(() => {

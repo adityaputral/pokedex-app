@@ -25,7 +25,7 @@ export function QueryProvider({ children }: { children: ReactNode }) {
 export function useQueryContext() {
   const context = useContext(QueryContext);
   if (!context) {
-    throw new Error('useSnackbar must be used within SnackbarProvider');
+    throw new Error('useQueryContext must be used within QueryClientProvider');
   }
   return context;
 }

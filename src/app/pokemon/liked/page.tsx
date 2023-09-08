@@ -5,15 +5,18 @@ import Link from 'next/link';
 import Button from '@mui/material/Button';
 import Card from '../../../components/card/Card';
 import { useLikedPokemons } from './../../../context/LikedPokemonContext';
+import { useLoading } from './../../../context/LoadingContext';
 
 export default function LikedPokemonPage() {
   const [pokemonList, setPokemonList] = useState<
     { name: string; image: string }[]
   >([]);
   const { likedPokemons } = useLikedPokemons();
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     async function populateData() {
+      setLoading(true);
       let mergedPokemonList: { name: string; image: string }[] = [
         ...pokemonList
       ];
@@ -33,6 +36,7 @@ export default function LikedPokemonPage() {
       }
 
       setPokemonList(mergedPokemonList);
+      setLoading(false);
     }
 
     populateData();
